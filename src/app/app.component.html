@@ -9,12 +9,20 @@
 
   <div class="mt-8">
     <div *ngIf="domainsLoading">
-      <p>loading</p>
+        <div role="status" class="w-full animate-pulse">
+          <div class="h-2.5 bg-gray-200 rounded-full w-5/12 mb-4"></div>
+          <div class="h-2 bg-gray-200 rounded-full w-7/12 mb-2.5"></div>
+          <div class="h-2 bg-gray-200 rounded-full w-8/12 mb-2.5"></div>
+          <div class="h-2 bg-gray-200 rounded-full w-7/12 mb-2.5"></div>
+          <div class="h-2 bg-gray-200 rounded-full w-8/12 mb-2.5"></div>
+          <div class="h-2 bg-gray-200 rounded-full w-9/12"></div>
+          <span class="sr-only">Loading...</span>
+        </div>
     </div>
     <div *ngIf="!domainsLoading && domains.length === 0">
       <p class="hidden">welcome source code</p>
     </div>
-    <div *ngIf="domains.length > 0" class="flex space-x-6 transition">
+    <div *ngIf="domains.length > 0" class="flex space-x-6 transition mb-10">
       <div class="border-b border-gray-200" style="flex: 3">
         <app-domain-card *ngFor="let domain of domains" [domain]="domain" (onSelectDomain)="changeSelectedDomain($event)"></app-domain-card>
       </div>
