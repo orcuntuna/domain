@@ -1,4 +1,27 @@
-<div>
-  <div class="bg-blue-500 text-xl text-white">homepage</div>
-  <app-search-bar></app-search-bar>
+<div class="container mx-auto">
+  <div class="w-100 mt-10">
+    <div class="mb-3">
+      <h2 class="text-xl font-medium text-gray-900">Domain Search</h2>
+      <p class="mt-1 text-sm text-gray-600">Find the domain you are looking for among thousands of domains</p>
+    </div>
+    <app-search-bar (onSubmitSearchQuery)="getDomains($event)"></app-search-bar>
+  </div>
+
+  <div class="mt-8">
+    <div *ngIf="domainsLoading">
+      <p>loading</p>
+    </div>
+    <div *ngIf="!domainsLoading && domains.length === 0">
+      <p class="hidden">welcome source code</p>
+    </div>
+    <div *ngIf="domains.length > 0" class="flex space-x-6 transition">
+      <div class="border-b border-gray-200" style="flex: 3">
+        <app-domain-card *ngFor="let domain of domains" [domain]="domain" (onSelectDomain)="changeSelectedDomain($event)"></app-domain-card>
+      </div>
+      <div *ngIf="selectedDomain" style="flex: 2">
+        <app-domain-info [domain]="selectedDomain.domain" [status]="selectedDomain.status"></app-domain-info>
+      </div>
+    </div>
+  </div>
+
 </div>

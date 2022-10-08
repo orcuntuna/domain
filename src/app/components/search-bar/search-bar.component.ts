@@ -1,15 +1,17 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
   selector: 'app-search-bar',
   templateUrl: './search-bar.component.html',
   styleUrls: ['./search-bar.component.css']
 })
-export class SearchBarComponent implements OnInit {
+export class SearchBarComponent {
 
-  @Input() placeholder: string = "Search";
+  @Input() searchQuery: string = "";
+  @Output() onSubmitSearchQuery = new EventEmitter();
 
-  ngOnInit(): void {
+  onSubmit(e: FormDataEvent): void {
+    e.preventDefault()
+    this.onSubmitSearchQuery.emit(this.searchQuery)
   }
-
 }

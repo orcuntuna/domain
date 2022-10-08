@@ -1,1 +1,90 @@
-<p>domain-info works!</p>
+<div>
+  <h3 class="font-bold text-2xl mb-8 text-gray-900 flex items-center space-x-3">
+    <span>{{domain.domain}}</span>
+    <span *ngIf="status.status === 'inactive'" class="inline-flex items-center rounded-md bg-green-100 px-2.5 py-0.5 text-sm font-medium text-green-800">
+      <svg class="-ml-0.5 mr-1.5 h-2 w-2 text-green-400" fill="currentColor" viewBox="0 0 8 8">
+        <circle cx="4" cy="4" r="3"/>
+      </svg>
+      Available
+    </span>
+  </h3>
+  <div *ngIf="status.status === 'inactive'">
+    <div class="grid grid-cols-2 gap-4">
+      <a [href]="company.url" target="_blank" *ngFor="let company of domainCompanies" type="button" class="inline-flex flex-col rounded-md border border-gray-300 bg-white px-4 py-3 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+        <span class="text-sm font-medium text-gray-700">{{company.name}}</span>
+        <span class="text-sm font-normal text-gray-500">{{company.domain}}</span>
+      </a>
+    </div>
+  </div>
+  <div *ngIf="status.status !== 'inactive'">
+    <div *ngIf="whoisInfoLoading">
+      <div role="status" class="w-full animate-pulse">
+        <div class="h-2.5 bg-gray-200 rounded-full w-5/12 mb-4"></div>
+        <div class="h-2 bg-gray-200 rounded-full w-7/12 mb-2.5"></div>
+        <div class="h-2 bg-gray-200 rounded-full w-8/12 mb-2.5"></div>
+        <div class="h-2 bg-gray-200 rounded-full w-7/12 mb-2.5"></div>
+        <div class="h-2 bg-gray-200 rounded-full w-8/12 mb-2.5"></div>
+        <div class="h-2 bg-gray-200 rounded-full w-9/12"></div>
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+    <div *ngIf="!tldIsSupporting">
+      <div class="rounded-md bg-yellow-50 p-4">
+        <div class="flex">
+          <div>
+            <h3 class="text-sm font-medium text-yellow-800">Warning</h3>
+            <div class="mt-2 text-sm text-yellow-700">
+              <p>This TLD (.{{domain.zone}}) not supporting on whois service.</p>
+            </div>
+            <div class="mt-4">
+              <div class="-mx-2 -my-1.5 flex">
+                <a target="_blank" href="https://who.is/whois/{{domain.domain}}"
+                   class="rounded-md bg-yellow-50 px-2 py-1.5 text-sm font-medium text-yellow-800 hover:bg-yellow-100 focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:ring-offset-2 focus:ring-offset-yellow-50">Use
+                  an external whois service</a>
+              </div>
+            </div>
+            <div class="mt-4 text-xs text-gray-400">
+              <span class="font-medium">Supported TLDs: </span> {{whoisService.supportedTldList.join(', ')}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="whoisInfo && !whoisInfo?.isAvailable" class="space-y-10">
+      <div class="space-y-4">
+        <h3 class="font-medium leading-3 text-gray-700">Whois Information</h3>
+        <div class="overflow-hidden bg-white shadow sm:rounded-lg">
+          <div>
+            <dl>
+              <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium text-gray-500">Registrar</dt>
+                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{{whoisInfo.registrar}}</dd>
+              </div>
+              <div class="bg-white px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium text-gray-500">Creation Date</dt>
+                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{{whoisInfo.creationDate}}</dd>
+              </div>
+              <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium text-gray-500">Updated Date</dt>
+                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{{whoisInfo.updatedDate}}</dd>
+              </div>
+              <div class="bg-white px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium text-gray-500">Expiration Date</dt>
+                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{{whoisInfo.expirationDate}}</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </div>
+      <div class="space-y-4" *ngIf="whoisInfo && whoisInfo.status.length > 0">
+        <h3 class="font-medium leading-3 text-gray-700">Icann Logs</h3>
+        <div class="overflow-hidden bg-white shadow sm:rounded-lg overflow-x-auto py-4">
+          <code class="text-xs block whitespace-nowrap px-4 leading-5 text-gray-600"
+                *ngFor="let log of whoisInfo.status">{{log}}</code>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
