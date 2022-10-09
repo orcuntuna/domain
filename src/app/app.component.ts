@@ -31,6 +31,10 @@ export class AppComponent implements OnInit {
     })
   }
 
+  cleanSelectedDomain(){
+    this.selectedDomain = undefined
+  }
+
   ngOnInit(): void {
     this.favoritesStoreService.syncDomainsFromStorage()
   }

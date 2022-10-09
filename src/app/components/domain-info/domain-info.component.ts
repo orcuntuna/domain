@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitter} from '@angular/core';
 import {Domain} from "../../models/domain";
 import {WhoisService} from "../../services/whois.service";
 import {WhoisInfo} from "../../models/whois-info";
@@ -14,6 +14,7 @@ export class DomainInfoComponent implements OnInit, OnChanges {
 
   @Input() domain!: Domain
   @Input() status!: DomainStatus
+  @Output() onCloseDomainInfo = new EventEmitter()
   whoisInfo?: WhoisInfo
   whoisInfoLoading = false
   tldIsSupporting = false

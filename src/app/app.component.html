@@ -1,4 +1,4 @@
-<div class="container mx-auto">
+<div class="container mx-auto px-4 sm:px-0">
 
   <app-favorites *ngIf="favoritesStoreService.favoritesIsVisible"></app-favorites>
 
@@ -25,12 +25,12 @@
     <div *ngIf="!domainsLoading && domains.length === 0">
       <p class="hidden">welcome source code</p>
     </div>
-    <div *ngIf="domains.length > 0" class="flex space-x-6 transition mb-10">
+    <div *ngIf="domains.length > 0" class="flex flex-col-reverse sm:flex-row sm:space-x-6 transition mb-10">
       <div class="border-b border-gray-200" style="flex: 3">
         <app-domain-card *ngFor="let domain of domains" [domain]="domain" (onSelectDomain)="changeSelectedDomain($event)"></app-domain-card>
       </div>
-      <div *ngIf="selectedDomain" style="flex: 2">
-        <app-domain-info [domain]="selectedDomain.domain" [status]="selectedDomain.status"></app-domain-info>
+      <div *ngIf="selectedDomain" class="mb-6 sm:mb-0" style="flex: 2">
+        <app-domain-info [domain]="selectedDomain.domain" [status]="selectedDomain.status" (onCloseDomainInfo)="cleanSelectedDomain()"></app-domain-info>
       </div>
     </div>
   </div>
