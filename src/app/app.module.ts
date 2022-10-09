@@ -8,6 +8,7 @@ import {SearchBarComponent} from './components/search-bar/search-bar.component';
 import {DomainCardComponent} from './components/domain-card/domain-card.component';
 import {DomainInfoComponent} from './components/domain-info/domain-info.component';
 import {FavoritesComponent} from './components/favorites/favorites.component';
+import { LoaderComponent } from './components/loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import {FavoritesComponent} from './components/favorites/favorites.component';
     SearchBarComponent,
     DomainCardComponent,
     DomainInfoComponent,
-    FavoritesComponent
+    FavoritesComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,

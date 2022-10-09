@@ -12,15 +12,7 @@
 
   <div class="mt-8">
     <div *ngIf="domainsLoading">
-        <div role="status" class="w-full animate-pulse">
-          <div class="h-2.5 bg-gray-200 rounded-full w-5/12 mb-4"></div>
-          <div class="h-2 bg-gray-200 rounded-full w-7/12 mb-2.5"></div>
-          <div class="h-2 bg-gray-200 rounded-full w-8/12 mb-2.5"></div>
-          <div class="h-2 bg-gray-200 rounded-full w-7/12 mb-2.5"></div>
-          <div class="h-2 bg-gray-200 rounded-full w-8/12 mb-2.5"></div>
-          <div class="h-2 bg-gray-200 rounded-full w-9/12"></div>
-          <span class="sr-only">Loading...</span>
-        </div>
+        <app-loader></app-loader>
     </div>
     <div *ngIf="!domainsLoading && domains.length === 0">
       <p class="hidden">welcome source code</p>
