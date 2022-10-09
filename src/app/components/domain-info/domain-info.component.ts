@@ -3,6 +3,7 @@ import {Domain} from "../../models/domain";
 import {WhoisService} from "../../services/whois.service";
 import {WhoisInfo} from "../../models/whois-info";
 import {DomainStatus} from "../../models/domain-status";
+import {FavoritesStoreService} from "../../services/favorites-store.service";
 
 @Component({
   selector: 'app-domain-info',
@@ -17,14 +18,15 @@ export class DomainInfoComponent implements OnInit, OnChanges {
   whoisInfoLoading = false
   tldIsSupporting = false
 
-  constructor(public whoisService: WhoisService) { }
+  constructor(public whoisService: WhoisService, public favoritesStoreService: FavoritesStoreService) {
+  }
 
   ngOnInit(): void {
     this.loadWhoisInfo()
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes["domain"] && changes["domain"].currentValue && changes["domain"].previousValue){
+    if (changes["domain"] && changes["domain"].currentValue && changes["domain"].previousValue) {
       this.whoisInfo = undefined
       this.whoisInfoLoading = false
       this.tldIsSupporting = false
@@ -32,9 +34,9 @@ export class DomainInfoComponent implements OnInit, OnChanges {
     }
   }
 
-  private loadWhoisInfo(){
-    if(this.status.status === "inactive") return
-    if(this.whoisService.tldIsSupported(this.domain.zone)){
+  private loadWhoisInfo() {
+    if (this.status.status === "inactive") return
+    if (this.whoisService.tldIsSupported(this.domain.zone)) {
       this.tldIsSupporting = true
       this.whoisInfoLoading = true
       this.whoisService.getWhoisInfo(this.domain.domain).subscribe(res => {
@@ -42,6 +44,10 @@ export class DomainInfoComponent implements OnInit, OnChanges {
         this.whoisInfoLoading = false
       })
     }
+  }
+
+  get isDomainInFavorites() {
+    return this.favoritesStoreService.favoriteDomains.includes(this.domain.domain)
   }
 
   get domainCompanies() {

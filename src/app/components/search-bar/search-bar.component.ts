@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {FavoritesStoreService} from "../../services/favorites-store.service";
 
 @Component({
   selector: 'app-search-bar',
@@ -9,6 +10,9 @@ export class SearchBarComponent {
 
   @Input() searchQuery: string = "";
   @Output() onSubmitSearchQuery = new EventEmitter();
+
+  constructor(public favoritesStoreService: FavoritesStoreService) {
+  }
 
   onSubmit(e: FormDataEvent): void {
     e.preventDefault()
